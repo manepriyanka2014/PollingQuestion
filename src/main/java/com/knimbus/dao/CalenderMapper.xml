@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.knimbus.dao.CalenderMapper">
+	
+	
+	<resultMap type="calenderInfo" id="result">
+		<id property="event_id" column="event_id" />
+	    <result property="date" column="date" />
+		<result property="title" column="title" />
+		<result property="link" column="link" />
+		
+	</resultMap>
+	
+<select id="getAllEvent" resultType="calenderInfo" >
+		SELECT * FROM calenderInfo
+	</select>
+	
+	<select id="getById" parameterType="Integer" resultMap = "result">
+      SELECT * FROM calenderInfo WHERE event_id = #{event_id};
+   </select>
+	
+	<insert id="addEvent" parameterType="calenderInfo">
+		INSERT INTO calenderInfo( date, title, link)
+		VALUES(#{date},#{title}, #{link})
+	</insert>
+	
+		<update id="updateEvent" parameterType="calenderInfo" >
+		UPDATE calenderInfo SET date = #{date}, title = #{title}, link = #{link}
+				WHERE event_id = #{event_id}
+	</update>
+	
+	<delete id="deleteEvent" parameterType="Integer">
+		DELETE FROM calenderInfo WHERE event_id = #{event_id}
+	</delete>
+
+</mapper>

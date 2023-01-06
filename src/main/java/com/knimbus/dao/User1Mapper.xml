@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.knimbus.dao.User1Mapper">
+	
+	
+	<resultMap type="user1" id="result">
+		<id property="userId" column="userId" />
+	    <result property="userName" column="userName" />
+	    <result property="email" column="email" />
+		<result property="password" column="password" />
+		<result property="vote" column="vote" />
+		
+	</resultMap>
+		
+	<insert id="createUser1" parameterType="user1" useGeneratedKeys="true" keyProperty="userId">
+		INSERT INTO user1(userName, email, password,vote)
+		VALUES(#{userName}, #{email}, #{password},#{vote})
+	</insert>
+	
+	<update id="updateVote" parameterType="user1">
+		UPDATE user1 SET vote = #{vote} WHERE userId = #{userId}
+	</update>
+	
+	<select id="getVoteCout" resultType="hashmap">
+		SELECT sum(vote = 'A') as option1,
+        sum(vote = 'B') as option2,
+        sum(vote = 'C') as option3 
+        FROM user1
+	</select>
+	
+	<select id="getById" parameterType="int" resultMap = "result">
+      SELECT * FROM user1 WHERE userId = #{userId};
+   </select>
+	
+	<select id="getAllUser1" resultType="user1" resultMap="result">
+		SELECT * FROM user1
+	</select>
+	<select id="validateUser1Credential1" parameterType="user1" resultMap="result">
+       SELECT * FROM USER1 WHERE email = #{email} AND password = #{password}
+    </select>
+	</mapper>

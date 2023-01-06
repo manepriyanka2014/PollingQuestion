@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.knimbus.dao.QuestionMapper">
+	
+	
+	<resultMap type="question" id="result">
+		<id property="questionId" column="questionId" />
+	    <result property="question" column="question" />
+		<result property="options" column="options" javaType="java.util.ArrayList" jdbcType = "VARCHAR"
+		typeHandler="com.knimbus.util.config.MyBatisJsonTypeHandler"/>
+		
+	</resultMap>
+	
+    <select id="getAllQuestion" resultType="question" >
+		SELECT * FROM question
+	</select>
+	
+	<insert id="addQuestion" parameterType="question">
+		INSERT INTO question( questionId, question, options)
+		VALUES(#{questionId},#{question}, #{options, typeHandler={com.knimbus.util.config.MyBatisJsonTypeHandler}, javaType = {com.knimbus.model.Options}})
+	</insert>
+	
+	<delete id="deleteQuestion" parameterType="int">
+		DELETE FROM question WHERE questionId = #{questionId}
+	</delete>
+</mapper>
